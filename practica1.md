@@ -88,6 +88,66 @@
    [solucion: p1e1-5.sh](./scripts/primera_parte/p1e1-5.sh)
 
 
+6. Realice un script que copie todos los archivos del directorio home del usuario que lo eje-
+   cuta, a un subdirectorio del mismo llamado backup cambiándoles el nombre para que esté
+   en mayúsculas. No se deben procesar los subdirectorios del home del usuario,
+   únicamente los archivos ubicados directamente en este. Si el directorio backup existe al
+   iniciar el script, el contenido del mismo debe borrarse antes de copiar los archivos.
+
+   Ejemplo: si el home del usuario actual contiene:
+
+   ```
+   /
+    home/
+     mi_usuario/
+      so/
+       practica1.pdf
+      ejercicios/
+       ejercicio−1.sh
+      ejercicio−2.sh
+       archivo1.txt
+      mi−script.sh
+      otro_archivo.txt
+   ```
+
+   se espera tener lo siguiente luego de la ejecución del script:
+
+   ```
+   /
+    home/
+     mi_usuario/
+      backup/
+       ARCHIVO1.TXT
+       MI−SCRIPT.SH
+       OTRO_ARCHIVO.TXT
+      so/
+       practica1.pdf
+       ejercicios/
+       ejercicio−1.sh
+       ejercicio−2.sh
+      archivo1.txt
+      mi−script.sh
+      otro_archivo.txt
+   ```
+   
+   [solucion: p1e1-6.sh](./scripts/primera_parte/p1e1-6.sh)
+
+
+7. Un escritor tiene organizados los capítulos de su próximo libro en distintos archivos de
+   texto plano en un mismo directorio, y le ha solicitado ayuda para concatenar el contenido
+   de cada uno de ellos en un único archivo final llamado libro.txt, de modo tal que éste
+   último contenga el texto de todos los otros archivos, uno luego del otro. Puede asumir que
+   los archivos de los capítulos tienen nombres alfabéticamente ordenados:
+
+   ```
+   capitulo-01.txt,capitulo-02.txt, ..., capitulo-48.txt, por ejemplo.
+   ```
+
+   Tip: man cat.
+
+   [solucion: p1e1-7.sh](./scripts/primera_parte/p1e1-7.sh)
+
+
 ## Segunda Parte
 
 1. La herramienta netcat provee una forma sencilla de establecer una conexión
