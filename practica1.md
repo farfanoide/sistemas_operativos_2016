@@ -129,7 +129,7 @@
       mi−script.sh
       otro_archivo.txt
    ```
-   
+
    [solucion: p1e1-6.sh](./scripts/primera_parte/p1e1-6.sh)
 
 
@@ -156,12 +156,12 @@
    terminal conéctese, también vía netcat, al servidor recién levantado.
    Interactúe y experimente con ambas terminales.echo $hosts
 
-  ```console
+  ```sh
   # Servidor
   nc -l 0.0.0.0 -p 9090
   ```
 
-  ```console
+  ```sh
   # Cliente
   nc 0.0.0.0 9090
   ```
@@ -172,12 +172,12 @@
 
   > Tip: recordar pipes y redirecciones.
 
-  ```console
+  ```sh
   # Servidor
   nc -l 0.0.0.0 -p 9090 > passwd
   ```
 
-  ```console
+  ```sh
   # Cliente
   cat /etc/passwd | nc 0.0.0.0 9090
   ```
@@ -197,7 +197,7 @@
    Deberá ser posible utilizar como entrada estándar la salida estándar del
    script anterior.
 
-   ```console
+   ```sh
    echo www.google.com www.debian.org www.linti.unlp.edu.ar | ./cl.sh
    #=>  www.google.com: 262
    #=>  www.debian.org: 470
@@ -211,7 +211,7 @@
 5. Interprete y describa qué es lo que hace el siguiente fragmento de código
    extraído de la man page de netcat.
 
-   ```console
+   ```sh
    rm −f /tmp/f; mkfifo /tmp/m
    cat /tmp/f | /bin/sh −i 2>&1 | nc −l 127.0.0.1 1234 > /tmp/f
    ```
