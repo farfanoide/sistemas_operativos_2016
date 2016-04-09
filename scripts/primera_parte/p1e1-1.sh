@@ -1,9 +1,11 @@
 #!/usr/bin/env bash
-array=$(cat /etc/passwd | grep 1000)
-for i in "${array[@]}"
-do
-  uid=$(echo "$i" | cut -d: -f3)
-  if [ $uid = 1000 ]; then
-    echo "$i" | cut -d: -f1 > /tmp/usuarios
-  fi  
+users=$(grep 1000 /etc/passwd)
+
+for user in "${users[@]}"; do
+
+  uid=$(echo "$user" | cut -d: -f3)
+  echo "$user"
+
+  [ "$uid" = 1000 ] && echo "$user" | cut -d: -f1 > /tmp/usuarios
+
 done
