@@ -1,3 +1,95 @@
+## Primera Parte
+
+1. Relice un script que guarde en el archivo /tmp/usuarios los nombres de los usuarios del
+   sistema cuyo UID sea mayor a 1000.
+
+   [solucion: p1e1-1.sh](./scripts/primera_parte/p1e1-1.sh)
+
+
+2. Implemente un script que reciba como parámetro el nombre de un proceso e informe cada
+   15 segundos cuántas instancias de ese proceso están en ejecución.
+
+   [solucion: p1e1-2.sh](./scripts/primera_parte/p1e1-2.sh)
+
+
+3. Desarrolle un script que guarde en un arreglo todos los archivos del directorio actual (in-
+   cluyendo sus subdirectorios) para los cuales el usuario que ejecuta el script tiene permisos
+   de ejecución. Luego, implemente las siguientes funciones:
+   (a) cantidad: Imprime la cantidad de archivos que se encontraron
+   (b) archivos: Imprime los nombres de los archivos encontrados en orden alfabético
+
+   [solucion: p1e1-3.sh](./scripts/primera_parte/p1e1-3.sh)
+
+
+4. Se le ha encomendado organizar las fotos (en formato jpg) de todos los eventos de los
+   que su empresa ha participado en el último año, los cuales se encuentran organizados en
+   directorios con el nombre del evento. Para facilitar su búsqueda posterior, los archivos deben
+   tener nombres que sigan el siguiente patrón: EVENTO-N.jpg, donde:
+   EVENTO es el nombre del evento (el del directorio que se está procesando)
+   N es un índice de foto, comenzando en 1
+   Realice un script que renombre los archivos de cada subdirectorio del directorio actual
+   siguiendo lo especificado en el párrafo anterior.
+   Ejemplo: dada la siguiente estructura de archivos y directorios:
+
+   ```
+   bashconf15/
+    DSC01050.jpg
+    DSC01051.jpg
+    DSC01052.jpg
+    DSC01053.jpg
+    DSC01054.jpg
+   jsconf−14/
+    DSC01230.jpg
+    DSC01231.jpg
+    DSC01232.jpg
+    DSC01235.jpg
+    DSC01236.jpg
+   oktoberfest−14/
+    DSC02229.jpg
+    DSC02230.jpg
+    DSC02231.jpg
+    DSC02232.jpg
+   ```
+
+   Se desea terminar con la siguiente estructura luego de ejecutar su script:
+
+   ```
+   bashconf15/
+    bashconf15−1.jpg
+    bashconf15−2.jpg
+    bashconf15−3.jpg
+    bashconf15−4.jpg
+    bashconf15−5.jpg
+   jsconf−14/
+    jsconf−14−1.jpg
+    jsconf−14−2.jpg
+    jsconf−14−3.jpg
+    jsconf−14−4.jpg
+    jsconf−14−5.jpg
+   oktoberfest−14/
+    oktoberfest−14−1.jpg
+    oktoberfest−14−2.jpg
+    oktoberfest−14−3.jpg
+    oktoberfest−14−4.jpg
+   ```
+   [solucion: p1e1-4.sh](./scripts/primera_parte/p1e1-4.sh)
+
+
+5. Escriba un script que liste en orden alfabético inverso el contenido del directorio actual. Es
+   decir, si el contenido son los archivos:
+   ```
+   archivo_1.txt articulo.doc directorio directorio_2 script.sh
+   ```
+   se espera que el script los liste de la siguiente manera:
+   ```
+   script.sh directorio_2 directorio articulo.doc archivo_1.txt
+   ```
+
+   [solucion: p1e1-5.sh](./scripts/primera_parte/p1e1-5.sh)
+
+
+## Segunda Parte
+
 1. La herramienta netcat provee una forma sencilla de establecer una conexión
    TCP/IP. En una terminal levante una sesión de netcat en modo servidor, que
    escuche en la IP 127.0.0.1 (localhost) en un puerto a elección. En otra
