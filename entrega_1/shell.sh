@@ -2,7 +2,7 @@
 
 # Globals: -----------------------------------------------------------------{{{
 
-RUTAS="/bin;/usr/bin;/usr/local/bin;/vagrant/scripts"
+RUTAS="/bin;/usr/bin;/usr/local/bin"
 RED=$(tput setaf 1)
 RESET=$(tput sgr0)
 PROMPT_COMMAND=whoami
@@ -34,7 +34,6 @@ _check_file() {
     return $status
 }
 
-_split_path()   { echo $RUTAS | tr ';' '\n' ;}
 _is_builtin()   {
     # Con solo preguntar por 'function' nos alcanza, pero sino incorporamos las
     # 'builtin' la shell va a ser medio inutil, ej: no tenemos siquiera el
@@ -45,13 +44,18 @@ _is_builtin()   {
 }
 
 _find_command() {
+    # _split_path()   { echo $RUTAS | tr ';' '\n' ;}
     # buscamos el ejecutable, dandole preferencia a los builtin, devolvemos un
     # codigo de salida para poder usarlo en condicionales
     local command=$1
+
     _is_builtin $command && echo $command && return 0
-    for dir in $(_split_path); do
+
+    _OLD_IFS=$IFS; IFS='\;'
+    for dir in ${RUTAS}; do
         [ -x "${dir}/${command}" ] && echo "${dir}/${command}" && return 0
     done
+    IFS=$_OLD_IFS
     return 1
 }
 # end helpers --------------------------------------------------------------}}}
@@ -106,12 +110,16 @@ _echo_prompt() {
 }
 
 prompt() {
-    export PROMPT_COMMAND="$@"
+  if [ $# -eq 0 ]; then
+    export PROMPT_COMMAND=whoami
+  else
+    [ "$1" = 'largo' ] && export PROMPT_COMMAND="quiensoy --prompt"
+    [ "$1" = 'uid' ] && export PROMPT_COMMAND="_get_uid"
+  fi
 }
 
 quiensoy() {
-    local user=$(whoami)
-    local quiensoy="Yo soy ${user}"
+    local quiensoy="Yo soy $(whoami)"
 
     if [ $# -eq 1 ]; then
         [ $1 = '+h' ] && quiensoy="${quiensoy} y estoy en la maquina $(hostname)"
@@ -134,11 +142,10 @@ while true; do
     comm=$(_first_word $args)        # no hace falta unsetearlas en cada vuelta
     args=$(_remove_first_word $args) # porq ya lo hacemos de todas formas
 
-    if _find_command $comm > /dev/null; then
-        eval "$comm $args" &
-        wait $!
+    if executable=$(_find_command $comm); then
+        eval "${executable} ${args}"
     else
-        echo "$RED No encontre el comando $RESET"
+        echo "${RED}No encontre el comando ${RESET}"
     fi
 done
 # end repl -----------------------------------------------------------------}}}

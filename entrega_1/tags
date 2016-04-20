@@ -1,0 +1,26 @@
+!_TAG_FILE_FORMAT	2	/extended format; --format=1 will not append ;" to lines/
+!_TAG_FILE_SORTED	1	/0=unsorted, 1=sorted, 2=foldcase/
+!_TAG_PROGRAM_AUTHOR	Darren Hiebert	/dhiebert@users.sourceforge.net/
+!_TAG_PROGRAM_NAME	Exuberant Ctags	//
+!_TAG_PROGRAM_URL	http://ctags.sourceforge.net	/official site/
+!_TAG_PROGRAM_VERSION	5.9~svn20110310	//
+_check_file	shell.sh	/^_check_file() {$/;"	f
+_echo_prompt	shell.sh	/^_echo_prompt() {$/;"	f
+_exists	shell.sh	/^    _exists()   { [ -e $1 ] ;}$/;"	f
+_file_details	shell.sh	/^    _file_details() {$/;"	f
+_find_command	shell.sh	/^_find_command() {$/;"	f
+_first_word	shell.sh	/^_first_word() { echo "$*" | cut -d ' ' -f 1 ;}$/;"	f
+_get_uid	shell.sh	/^_get_uid() { id -u $(whoami) ;}$/;"	f
+_is_builtin	shell.sh	/^_is_builtin()   {$/;"	f
+_list_details	shell.sh	/^    _list_details() {$/;"	f
+_octal	shell.sh	/^    _octal() { stat -c '%a' $(echo $* | cut -d ' ' -f9) ;}$/;"	f
+_readable	shell.sh	/^    _readable() { [ -r $1 ] ;}$/;"	f
+_remove_first_word	shell.sh	/^_remove_first_word() {$/;"	f
+cat	shell.sh	/^cat() {$/;"	f
+ls	shell.sh	/^ls()    {$/;"	f
+mkdir	shell.sh	/^mkdir() { command mkdir $* 2> \/dev\/null || echo "no tenes permisos" ;}$/;"	f
+prompt	shell.sh	/^prompt() {$/;"	f
+pwd	shell.sh	/^pwd()   { command pwd ;} # cant do much more than this :P$/;"	f
+quiensoy	shell.sh	/^quiensoy() {$/;"	f
+sl	shell.sh	/^sl()    { command ls -1r ;}$/;"	f
+tac	shell.sh	/^tac() {$/;"	f
