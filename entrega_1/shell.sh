@@ -18,14 +18,14 @@ _remove_first_word() {
     echo "${args/$word}" # borrar la primera ocurrencia de $word dentro de $var
 }
 
+_exists()   { [ -e $1 ] ;}
+_readable() { [ -r $1 ] ;}
+
 _check_file() {
     # tecnicamente esta funcion no es necesaria ya que bash hace todo esto por
     # nosotros, de la misma manera q las funciones locales solo estan para hacer
     # mas legibles los condicionales
     local file=$1 status=0
-    _exists()   { [ -e $1 ] ;}
-    _readable() { [ -r $1 ] ;}
-
     if ! _exists $file; then
         echo 'No such file or directory'; status=1
     elif ! _readable $file; then
@@ -61,8 +61,26 @@ _find_command() {
 # end helpers --------------------------------------------------------------}}}
 # Builtins: ----------------------------------------------------------------{{{
 
-pwd()   { command pwd ;} # cant do much more than this :P
-mkdir() { command mkdir $* 2> /dev/null || echo "no tenes permisos" ;}
+pwd()   { echo $PWD ;} # cant do much more than this :P
+
+mkdir() {
+  local dir="$1"
+  _find_base_dir(){
+    [ ! "${dir:0:1}" = '/' ] && dir="$PWD/$dir"
+    while ! _exists $dir; do
+      $dir="$(dirname $dir)"
+    done
+    echo $dir
+  }
+
+  if [ $# -eq 0] || [ "${dir:0:1}" = '-' ]; then
+    echo "Usage: mkdir <DIRECTORY> [options]" && exit 1
+  fi
+  if [ -w $(_find_base_dir $dir 2>& /dev/null) ]; then
+    echo 'No tenés permiso!' && exit 1
+  fi
+  command mkdir $args $dir 2>& /dev/null || echo 'Error!, Directorio/s no creado/s' && exit 1
+}
 sl()    { command ls -1r ;}
 ls()    {
     local args="$*"
