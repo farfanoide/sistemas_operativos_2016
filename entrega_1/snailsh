@@ -1,0 +1,131 @@
+#!/usr/bin/env bash
+
+RUTA='/bin;/usr/bin;/usr/local/bin'
+BUILTINS='ls sl cat tac prompt quiensoy pwd mkdir'
+PROMPT="@$(whoami)>" 
+
+function search_command {
+  com=$(echo "$*" | cut -d' ' -f1)
+  if echo $BUILTINS | grep -wq $com ; then
+    echo "_$*" && return 0
+  else
+    local tipo=$(type -t $com)
+    if [ "$tipo" = "builtin" ]; then
+      echo $* && return 0
+    else  
+      IFS=';'
+      for dir in $RUTA; do
+        if [ -x "$dir/$com" ]; then
+          IFS=' '
+          echo "$dir/$*" && return 0
+          break
+        fi
+      done
+      IFS=' '
+    fi
+  fi
+echo $com && return 127
+}
+
+function _stat {
+  array=$(ls $*)
+  for element in ${array[*]};do
+    stat -c "%a %h %U %G %s %z %n" $element
+  done
+}
+
+function _sl {
+  ls -r1 $*
+}
+
+function _cat {
+  cat $*
+}
+
+function _tac {
+  tac $* 
+}
+
+function _pwd {
+  pwd $*
+}
+
+function _mkdir {
+  if ! mkdir $* 2> /dev/null; then
+    echo "no tenes permisos" ;
+  fi 
+}
+
+function _prompt {
+  if [ $# -eq 1 ];then
+    if [ $1 = largo ];then
+      PROMPT="@YoSoy-$(whoami)>"
+      return 0
+    fi
+    if [ $1 = uid ];then
+      PROMPT="@$(id -u $(whoami))>"
+      return 0
+    fi
+  fi
+  PROMPT="@$(whoami)>"
+}
+
+function _quiensoy {
+  if [ $# -eq 1 ];then
+    local usuario=$(whoami)
+    if [ $1 = +h ];then
+      echo "Yo soy $usuario y estoy en la maquina $(hostname)"
+      return 0
+    fi
+    if [ $1 = +inos ];then
+      echo "Yo soy $usuario y tengo UID=$(id -u $usuario)"
+      return 0
+    fi
+    echo "Yo soy $usuario"
+  else
+    echo 'Cantidad de argumentos incorrecta. Solo es posible recibir uno solo'
+  fi  
+}
+
+function _ls {
+  if [ $# -eq 0 ];then
+    ls -1 && return 0
+  fi   
+  if [ $# -eq 1 ]; then
+    if [ $1 = -l ];then
+      _stat
+      return 0
+    else
+      ls -1 $1 
+      return 0
+    fi
+  else
+    if [ $1 = -l ];then
+      _stat $2
+      return 0
+    else 
+      ls -1 $*
+      return 0
+    fi
+  fi
+}
+
+while true; do
+  read -p $PROMPT line
+  if [ -n "$line" ];then
+    var=$(search_command $line)
+    if [ $? -eq 127 ];then
+      echo "No se pudo encontrar el comando $var"
+    else
+      $var
+      if [ $? -eq 127 ];then
+        echo $ERROR
+      fi
+    fi  
+  fi  
+ #Validaciones
+ #Obtener comando y sus parametros
+ #Ejecutar built−in de esta shell y esperar si es necesario
+ #O ejecutar built−in de bash
+ #O ejecutar comando externo con el criterio descrito mas abajo
+done
