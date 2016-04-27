@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-RUTA='/bin;/usr/bin;/usr/local/bin'
+RUTA='/bin;/usr/bin;/usr/local/bin;externalISO'
 BUILTINS='ls sl cat tac prompt quiensoy pwd mkdir'
 PROMPT="@$(whoami)>" 
 
@@ -51,7 +51,12 @@ function _pwd {
 }
 
 function _mkdir {
-  if ! mkdir $* 2> /dev/null; then
+  dir=$(dirname $1)
+  if [ -w $dir ];then 
+    if ! mkdir $* 2> /dev/null; then
+      echo 'Error!, Directorio/s no creado/s'
+    fi
+  else
     echo "no tenes permisos" ;
   fi 
 }
