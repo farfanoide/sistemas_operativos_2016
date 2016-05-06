@@ -1,4 +1,5 @@
 #!/usr/bin/env bash
+
 for host in $*; do
     netcat -w1 "${host}" 80 && echo $host
 done
