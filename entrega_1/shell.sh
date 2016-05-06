@@ -42,16 +42,12 @@ _check_file() {
 }
 
 _is_builtin()   {
-    # Con solo preguntar por 'function' nos alcanza, pero sino incorporamos las
-    # 'builtin' la shell va a ser medio inutil, ej: no tenemos siquiera el
-    # comando 'cd' disponible
-
+    # Damos prioridad a nuestras funciones y las builtins de bash
     local type=$(type -t $1)
     [ "${type}" = 'function' ] || [ "${type}" = 'builtin' ]
 }
 
 _find_command() {
-    # _split_path()   { echo $RUTAS | tr ';' '\n' ;}
     # buscamos el ejecutable, dandole preferencia a los builtin, devolvemos un
     # codigo de salida para poder usarlo en condicionales
     local command=$1
@@ -61,7 +57,6 @@ _find_command() {
 
     for (( i = ${#_rutas[*]} - 1; i >= 0; i--  )); do
         dir=${_rutas[$i]}
-        echo $dir >> /tmp/erroresmkdir
         [ -x "${dir}/${command}" ] && echo "${dir}/${command}" && return 0
     done
 
